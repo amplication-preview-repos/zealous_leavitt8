@@ -1,0 +1,43 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model KafkaMessage {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  offset    Int?
+  partition Int?
+  payload   Json?
+  topic     String?
+  updatedAt DateTime @updatedAt
+}
+
+model Webhook {
+  createdAt DateTime @default(now())
+  headers   Json?
+  id        String   @id @default(cuid())
+  payload   Json?
+  updatedAt DateTime @updatedAt
+  url       String?
+}
+
+model PostgreSqlFlow {
+  createdAt DateTime @default(now())
+  flow      Json?
+  id        String   @id @default(cuid())
+  step      Int?
+  updatedAt DateTime @updatedAt
+}
+
+model RedisCache {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  key       String?
+  updatedAt DateTime @updatedAt
+  value     Json?
+}
